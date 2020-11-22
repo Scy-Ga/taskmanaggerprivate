@@ -23,8 +23,8 @@ app.get('/', function(req, resp){
             console.log('error in query');
         } else{
             console.log('Success');
-            console.log(rows);
-            resp.send(rows);
+            console.log(rows[0].Helység);
+            resp.send(rows[0].Helység);
         }
     });
   });
