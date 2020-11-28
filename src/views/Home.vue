@@ -3,26 +3,33 @@
     <h1>Home</h1>
 
     <table id="input_table">
-      <tr> 
+      <tr>
         <td>A feladat neve:</td>
-        <td><input type="text" id="name_text"></td>
+        <td><input type="text" id="name_text" v-model="elem" /></td>
       </tr>
       <tr>
         <td>A feladat állása:</td>
-        <td><input type="checkbox" id="allas">Elkészült <input type="checkbox" name="" id="">Nem keszült</td>
+        <td>
+          <input type="checkbox" id="allas" />Elkészült
+          <input type="checkbox" name="" id="" />Nem keszült
+        </td>
       </tr>
       <tr>
         <td>Mikor kezdte a feladatot?</td>
-        <td><input type="date" id="date"></td>
+        <td><input type="date" id="date" /></td>
       </tr>
       <tr>
-        <td colspan="2"><input type="button" @click="addrow()" value="Kész"></td>
+        <td colspan="2">
+          <input type="button" @click="addrow()" value="Kész" />
+        </td>
       </tr>
     </table>
-<br>
-  <p v-for="task in tasks" :key="task.id"> {{task.id}} </p>
+    <br />
+    <div v-show="false">
+      <p v-for="task in tasks" :key="task.id">{{ task.id }}</p>
+    </div>
 
-<br>
+    <br />
     <!--<ul>
       
         v-for
@@ -40,9 +47,17 @@
     </ul> -->
 
     <table>
-      <tr v-for="task in tasks" :key="task.id" :class="{ completed: task.completed }">
-        <input @click="changeCompleted(task.id)" type="checkbox" :checked="task.completed"/>
-        <td> {{ task.name }}</td>
+      <tr
+        v-for="task in tasks"
+        :key="task.id"
+        :class="{ completed: task.completed }"
+      >
+        <input
+          @click="changeCompleted(task.id)"
+          type="checkbox"
+          :checked="task.completed"
+        />
+        <td>{{ task.name }}</td>
         <td>{{ task.due }}</td>
       </tr>
     </table>
@@ -50,11 +65,7 @@
 </template>
 
 <script>
-
-var elem = document.getElementById("name_text");
 //var valami = this.tasks.last("id");
-
-
 
 //var valami = tasks[""];
 //var vissza = valami[valami.lenght-1];
@@ -66,6 +77,7 @@ export default {
 
   data() {
     return {
+      elem: null,
       tasks: [
         {
           id: 1,
@@ -90,8 +102,8 @@ export default {
           name: "Negyedik feladat",
           completed: false,
           //due: "2020-11-21"
-        }
-      ]
+        },
+      ],
     };
   },
   methods: {
@@ -99,15 +111,15 @@ export default {
       let task = this.tasks.find((task) => task.id == id);
       task.completed = !task.completed;
     },
-    addrow(){
-      this.tasks.push({ id: this.tasks.last.id , name: elem , completed: false})
-      console.log(this.tasks.last)
-    }
-  }
+    addrow() {
+      this.tasks.push({
+        id: this.tasks[this.tasks.length - 1].id + 1,
+        name: this.elem,
+        completed: false,
+      });
+    },
+  },
 };
-
-
-
 </script>
 
 <style scoped>
@@ -143,7 +155,7 @@ li:hover {
   transition: 0.275s;
 }
 
-#input_table{
+#input_table {
   border: 1px solid black;
 }
 </style>
